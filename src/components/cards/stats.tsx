@@ -9,6 +9,8 @@ export const StatsCard = () => {
 
   const [showModal, setShowModal] = useState(false)
 
+  const totalExpenses = expenses.map(e => e.amount).reduce((a, b) => a + b)
+
   return (
     <>
       <div className="card">
@@ -17,14 +19,26 @@ export const StatsCard = () => {
             <i className="icon icon-edit"></i>
           </button>
 
-          <div className="card-title h5">Income</div>
-          <div className="card-subtitle text-primary">₹ {stats.income}</div>
+          <div className="card-title h5">
+            Income
+          </div>
+          <div className="card-subtitle text-primary">
+            ₹ {stats.income}
+          </div>
 
-          <div className="card-title h5 mt-2">Total Expenses</div>
-          <div className="card-subtitle text-error">₹ {expenses.map(e => e.amount).reduce((a, b) => a + b)}</div>
+          <div className="card-title h5 mt-2">
+            Total Expenses
+          </div>
+          <div className="card-subtitle text-error">
+            ₹ {totalExpenses}
+          </div>
 
-          <div className="card-title h5 mt-2">Total Remaining</div>
-          <div className="card-subtitle text-success">₹ {stats.income - expenses.map(e => e.amount).reduce((a, b) => a + b)}</div>
+          <div className="card-title h5 mt-2">
+            Total Remaining
+          </div>
+          <div className="card-subtitle text-success">
+            ₹ {stats.income - totalExpenses}
+          </div>
         </div>
       </div>
 

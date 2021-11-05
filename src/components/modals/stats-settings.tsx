@@ -1,10 +1,11 @@
 import { useState } from 'preact/hooks'
 
+import { BaseModal } from './base'
 import { useStore } from '../../store'
 
 interface StatsSettingsModalProps {
-  show: boolean
-  closeModal: () => void
+  show: boolean;
+  closeModal: () => void;
 }
 
 export const StatsSettingsModal = ({ show, closeModal }: StatsSettingsModalProps) => {
@@ -14,38 +15,23 @@ export const StatsSettingsModal = ({ show, closeModal }: StatsSettingsModalProps
   const [form, setForm] = useState({ income: stats.income })
 
   return (
-    <div className={`modal modal-lg ${show && 'active'}`}>
-      <a className="modal-overlay" aria-label="Close" onClick={() => closeModal()}></a>
-      <div className="modal-container">
-        <div className="modal-header">
-          <button className="btn btn-clear float-right" aria-label="Close" onClick={() => closeModal()}></button>
-          <div className="modal-title h5">
-            Income settings
-          </div>
-        </div>
-
-        <div className="modal-body">
-          <div className="content">
-            <div className="form-group">
-              <label className="form-label" for="income">Income</label>
-              <input
-                id="income"
-                type="number"
-                value={form.income}
-                onInput={(e) => setForm({ income: parseFloat((e.target as HTMLInputElement).value) })}
-                placeholder="Income"
-                className="form-input" />
-              </div>
-          </div>
-        </div>
-
-        <div className="modal-footer">
-          <button className="btn btn-link" onClick={() => closeModal()}>Close</button>
-          <button className="btn btn-primary" onClick={() => (updateIncome(form.income), closeModal())}>
-            Update
-          </button>
-        </div>
+    <BaseModal
+      show={show}
+      title="Income settings"
+      closeModal={closeModal}
+      onSubmit={() => (updateIncome(form.income), closeModal())}
+    >
+      <div className="form-group">
+        <label className="form-label" for="income">Income</label>
+        <input
+          id="income"
+          type="number"
+          value={form.income}
+          onInput={(e) => setForm({ income: parseFloat((e.target as HTMLInputElement).value) })}
+          placeholder="Income"
+          className="form-input"
+        />
       </div>
-    </div>
+    </BaseModal>
   )
 }

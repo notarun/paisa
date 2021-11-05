@@ -1,8 +1,22 @@
 import { useState } from 'preact/hooks'
 
-import { StatsCard } from './cards/stats'
-import { ExpensesPanel } from './panels/expenses'
 import { CategoriesPanel } from './panels/categories'
+import { ExpensesPanel } from './panels/expenses'
+import { StatsCard } from './cards/stats'
+
+interface TabComponentProps {
+  name: string;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const TabComponent = ({ name, isActive, onClick }: TabComponentProps) => (
+  <li className={`tab-item ${isActive && 'active'}`}>
+    <a href="#" onClick={() => onClick()}>
+      {name}
+    </a>
+  </li>
+)
 
 enum PanelTab {
   ExpensesTab = 'Expenses',
@@ -12,21 +26,18 @@ enum PanelTab {
 export const App = () => {
   const [activeTab, setActiveTab] = useState(PanelTab.ExpensesTab)
 
-  const tabs = Object.keys(PanelTab).map(tab => {
-    const key = tab as keyof typeof PanelTab
-    return (
-      <li className={`tab-item ${activeTab === PanelTab[key] && 'active'}`}>
-        <a href="#" onClick={() => setActiveTab(PanelTab[key])}>
-          {PanelTab[key]}
-        </a>
-      </li>
-    )
-  })
-
   return (
     <div className="container grid-xs pt-1">
       <StatsCard />
-      <ul className="tab tab-block">{ tabs }</ul>
+      <ul className="tab tab-block">
+        {Object.keys(PanelTab).map(t => t as keyof typeof PanelTab).map(t => (
+          <TabComponent
+            name={PanelTab[t]}
+            isActive={activeTab === PanelTab[t]}
+            onClick={() => setActiveTab(PanelTab[t])}
+          />
+        ))}
+      </ul>
       {activeTab === PanelTab.ExpensesTab && <ExpensesPanel/>}
       {activeTab === PanelTab.CategoriesTab && <CategoriesPanel/>}
     </div>

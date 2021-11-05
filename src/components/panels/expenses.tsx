@@ -6,8 +6,8 @@ interface ExpenseRowProps extends Expense {}
 const ExpenseRow = ({ description, category, amount }: ExpenseRowProps) => (
   <tr>
     <td>{description}</td>
-    <td><span class="chip">{category}</span></td>
-    <td class="text-error">₹{amount}</td>
+    <td><span className="chip">{category}</span></td>
+    <td className="text-error">₹{amount}</td>
   </tr>
 )
 
@@ -16,13 +16,15 @@ export const ExpensesPanel = () => {
 
   return (
     <>
-      <table class="table">
+      <table className="table">
         <tbody>
-          {expenses.map(e => <ExpenseRow
-            description={e.description}
-            category={e.category}
-            amount={e.amount}
-          />)}
+          {expenses.map(({ description, category, amount }) => (
+            <ExpenseRow
+              description={description}
+              category={category}
+              amount={amount}
+            />
+          ))}
         </tbody>
       </table>
     </>

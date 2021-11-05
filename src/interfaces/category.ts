@@ -1,4 +1,4 @@
 export interface Category {
-  name: string
-  percentage: number
+  name: string;
+  percentage: number;
 }

@@ -1,3 +1,3 @@
 export interface Statistics {
-  income: number
+  income: number;
 }
