@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState } from 'preact/hooks'
 
 import { StatsCard } from './cards/stats'
 import { ExpensesPanel } from './panels/expenses'

@@ -14,4 +14,5 @@ export const useStore = create<State>(set => ({
     { name: 'Needs', percentage: 50 },
     { name: 'Wants', percentage: 30 },
   ],
+  updateIncome: (income: number) => set({stats: {income}})
 }))
