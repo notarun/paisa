@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 import { Expense } from '../../interfaces/expense'
 import { useStore } from '../../store'

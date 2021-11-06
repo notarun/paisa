@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 
 import { StatsSettingsModal } from '../modals/stats-settings'
 import { useStore } from '../../store'
 
-export const StatsCard = () => {
+export const IncomeCard = () => {
   const { income, totalExpenses } = useStore(state => ({
     income: state.stats.income,
     totalExpenses: state.expenses.map(e => e.amount).reduce((a, b) => a + b, 0),
@@ -19,7 +19,7 @@ export const StatsCard = () => {
             <i className="icon icon-edit"></i>
           </button>
 
-          <div className="card-title h5">
+          <div className="card-title h5 mt-2">
             Income
           </div>
           <div className="card-subtitle text-primary">

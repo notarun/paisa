@@ -1,8 +1,10 @@
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
+import Splide from '@splidejs/splide';
 
 import { CategoriesPanel } from './panels/categories'
 import { ExpensesPanel } from './panels/expenses'
-import { StatsCard } from './cards/stats'
+import { CategoryCard } from './cards/category'
+import { IncomeCard } from './cards/income'
 
 interface TabComponentProps {
   name: string;
@@ -12,7 +14,7 @@ interface TabComponentProps {
 
 const TabComponent = ({ name, isActive, onClick }: TabComponentProps) => (
   <li className={`tab-item ${isActive && 'active'}`}>
-    <a href="#" onClick={() => onClick()}>
+    <a className="cursor-pointer" onClick={() => onClick()}>
       {name}
     </a>
   </li>
@@ -26,9 +28,23 @@ enum PanelTab {
 export const App = () => {
   const [activeTab, setActiveTab] = useState(PanelTab.ExpensesTab)
 
+  useEffect(() => {
+    setTimeout(() => new Splide('.splide', {
+      arrows: false,
+    }).mount(), 0)
+  }, [])
+
   return (
     <div className="container grid-xs pt-1">
-      <StatsCard />
+      <div className="splide">
+        <div className="splide__track">
+          <ul className="splide__list">
+            <li className="splide__slide"><IncomeCard /></li>
+            <li className="splide__slide"><CategoryCard /></li>
+          </ul>
+        </div>
+      </div>
+
       <ul className="tab tab-block">
         {Object.keys(PanelTab).map(t => t as keyof typeof PanelTab).map(t => (
           <TabComponent
@@ -38,6 +54,7 @@ export const App = () => {
           />
         ))}
       </ul>
+
       {activeTab === PanelTab.ExpensesTab && <ExpensesPanel/>}
       {activeTab === PanelTab.CategoriesTab && <CategoriesPanel/>}
     </div>
