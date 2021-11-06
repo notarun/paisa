@@ -1,6 +1,3 @@
-import { createPortal } from 'preact/compat';
-import { useState } from 'preact/hooks'
-
 import { StatsSettingsModal } from '../modals/stats-settings'
 import { useStore } from '../../store'
 
