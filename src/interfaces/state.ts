@@ -12,6 +12,9 @@ export interface State {
   updateSelectedStats: (selectedStats: number) => void,
   updateCurrentStats: (stats: Statistics) => void;
   createStats: (stats: Statistics) => void;
+  deleteStats: (index: number) => void;
+
   createExpense: (expense: Expense) => void;
   updateExpense: (expense: Expense, index: number) => void;
+  deleteExpense: (index: number) => void;
 }

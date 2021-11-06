@@ -24,28 +24,38 @@ export const useStore = create<State>(
   // @ts-ignore
   persist(
     (set, get) => ({
-      // state
+      /* STATE */
       selectedStats: 0,
       stats: [...initalStats],
       expenses: [],
       categories: [...initalCategories],
 
-      // actions
+      /* ACTIONS */
       currentStats: () => get().stats[get().selectedStats],
-      createStats: (stats: Statistics) => set({stats: [...get().stats, stats]}),
       updateSelectedStats: (selectedStats: number) => set({ selectedStats }),
       updateCurrentStats: (currentStats: Statistics) => {
         const stats = get().stats
         stats[get().selectedStats] = currentStats
         set({ stats })
       },
+      createStats: (stats: Statistics) => set({stats: [...get().stats, stats]}),
+      deleteStats: (index: number) => {
+        const stats = get().stats
+        stats.splice(index, 1)
+        set({ stats, selectedStats: stats.length - 1 })
+      },
 
       createExpense: (expense: Expense) => set({expenses: [...get().expenses, expense]}),
       updateExpense: (expense: Expense, index: number) => {
         const expenses = get().expenses
         expenses[index] = expense
-        set({expenses: expenses})
+        set({ expenses: expenses })
       },
+      deleteExpense: (index: number) => {
+        const expenses = get().expenses
+        expenses.splice(index, 1)
+        set({ expenses })
+      }
     }),
     {
       name: 'paisa/storage',

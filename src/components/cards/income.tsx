@@ -6,8 +6,8 @@ interface IncomeCardProps {
 }
 
 export const IncomeCard = ({ showModal }: IncomeCardProps) => {
-  const { income, totalExpenses } = useStore(state => ({
-    income: state.currentStats().income,
+  const { currentStats, totalExpenses } = useStore(state => ({
+    currentStats: state.currentStats,
     totalExpenses: state.expenses.map(e => e.amount).reduce((a, b) => a + b, 0),
   }))
 
@@ -26,7 +26,7 @@ export const IncomeCard = ({ showModal }: IncomeCardProps) => {
             Income
           </div>
           <div className="card-subtitle text-primary">
-            ₹ {income}
+            ₹ {currentStats().income}
           </div>
 
           <div className="card-title h5 mt-2">
@@ -40,7 +40,7 @@ export const IncomeCard = ({ showModal }: IncomeCardProps) => {
             Total Remaining
           </div>
           <div className="card-subtitle text-success">
-            ₹ {income - totalExpenses}
+            ₹ {currentStats().income - totalExpenses}
           </div>
         </div>
       </div>

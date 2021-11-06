@@ -3,9 +3,8 @@ import { useState } from 'preact/hooks'
 import { useStore } from '../../store'
 
 export const CategoryCard = () => {
-  const { categories, income, expenses } = useStore(state => ({
+  const { categories, expenses } = useStore(state => ({
     expenses: state.expenses,
-    income: state.currentStats().income,
     categories: state.categories,
   }))
 

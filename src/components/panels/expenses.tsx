@@ -37,22 +37,22 @@ export const ExpensesPanel = () => {
   }))
 
   const [showModal, setShowModal] = useState(false)
-  const [expenseModalIndex, setExpenseModalIndex] = useState<number | null>(null)
+  const [expenseIndex, setExpenseIndex] = useState<number | null>(null)
 
   const toggleModal = (show: boolean, index?: number) => {
     if (!show) {
-      setExpenseModalIndex(null)
+      setExpenseIndex(null)
       setShowModal(false)
       return
     }
 
     if (index !== undefined) {
-      setExpenseModalIndex(index)
+      setExpenseIndex(index)
       setShowModal(true)
       return
     }
 
-    setExpenseModalIndex(null)
+    setExpenseIndex(null)
     setShowModal(true)
   }
 
@@ -83,7 +83,7 @@ export const ExpensesPanel = () => {
       {createPortal(
         <ExpenseModal
           show={showModal}
-          expenseModalIndex={expenseModalIndex}
+          expenseIndex={expenseIndex}
           closeModal={() => toggleModal(false)}
         />,
         modalsContainer!

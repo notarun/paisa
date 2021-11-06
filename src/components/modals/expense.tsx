@@ -7,18 +7,25 @@ import { BaseModal } from './base'
 
 interface ExpenseModalProps {
   show: boolean;
-  expenseModalIndex: number | null;
+  expenseIndex: number | null;
   closeModal: () => void;
 }
 
-export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseModalProps) => {
+export const ExpenseModal = ({ show, expenseIndex, closeModal }: ExpenseModalProps) => {
   const today = dayjs().format('YYYY-MM-DD')
 
-  const { expenses, categories, createExpense, updateExpense } = useStore(state => ({
+  const {
+    expenses,
+    categories,
+    createExpense,
+    updateExpense,
+    deleteExpense,
+  } = useStore(state => ({
     expenses: state.expenses,
+    categories: state.categories.map(c => c.name),
     createExpense: state.createExpense,
     updateExpense: state.updateExpense,
-    categories: state.categories.map(c => c.name),
+    deleteExpense: state.deleteExpense,
   }))
 
   const formId = 'form-expense'
@@ -42,8 +49,8 @@ export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseMod
       return
     }
 
-    if (expenseModalIndex !== null) {
-      const expense = expenses[expenseModalIndex]
+    if (expenseIndex !== null) {
+      const expense = expenses[expenseIndex]
 
       setDescription(expense.description)
       setCategory(expense.category)
@@ -66,8 +73,8 @@ export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseMod
       date,
     }
 
-    if (expenseModalIndex !== null) {
-      updateExpense(expense, expenseModalIndex)
+    if (expenseIndex !== null) {
+      updateExpense(expense, expenseIndex)
     } else {
       createExpense(expense)
     }
@@ -82,6 +89,11 @@ export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseMod
       formId={formId}
       title={modalTitle}
       closeModal={closeModal}
+      deleteResource={
+        expenseIndex !== null
+          ? () => deleteExpense(expenseIndex)
+          : undefined
+      }
     >
       <form
         id={formId}

@@ -13,10 +13,20 @@ interface StatsSettingsModalProps {
 export const StatsSettingsModal = ({ show, action, closeModal }: StatsSettingsModalProps) => {
   const today = dayjs().format('YYYY-MM-DD')
 
-  const { updateCurrentStats, currentStats, createStats } = useStore(state => ({
+  const {
+    stats,
+    selectedStats,
+    updateCurrentStats,
+    currentStats,
+    createStats,
+    deleteStats,
+  } = useStore(state => ({
+    stats: state.stats,
+    selectedStats: state.selectedStats,
     updateCurrentStats: state.updateCurrentStats,
     currentStats: state.currentStats,
     createStats: state.createStats,
+    deleteStats: state.deleteStats,
   }))
 
   const formId = 'form-stats'
@@ -83,6 +93,11 @@ export const StatsSettingsModal = ({ show, action, closeModal }: StatsSettingsMo
       title="Income settings"
       formId={formId}
       closeModal={closeModal}
+      deleteResource={
+        action === 'update' && stats.length > 1
+          ? () => deleteStats(selectedStats)
+          : undefined
+      }
     >
       <form
         id={formId}

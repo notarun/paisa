@@ -8,10 +8,11 @@ interface BaseModalProps {
   show: boolean;
   children: ComponentChildren;
   closeModal: () => void;
+  deleteResource?: () => void;
   formId?: string;
 }
 
-export const BaseModal = ({ title, show, children, closeModal, formId }: BaseModalProps) => (
+export const BaseModal = ({ title, show, children, closeModal, deleteResource, formId }: BaseModalProps) => (
   <div className={`modal modal-lg ${show && 'active'}`}>
     <a className="modal-overlay" aria-label="Close" onClick={() => closeModal()}></a>
     <div className="modal-container container grid-xs">
@@ -30,6 +31,14 @@ export const BaseModal = ({ title, show, children, closeModal, formId }: BaseMod
         <button className="btn btn-link" onClick={() => closeModal()}>
           Close
         </button>
+        {deleteResource && (
+          <button
+            className="btn btn-error mr-1"
+            onClick={() => (deleteResource(), closeModal())}
+          >
+            Delete
+          </button>
+        )}
         {formId && (
           <button form={formId} className="btn btn-primary">
             Submit
