@@ -1,3 +1,4 @@
+import { createPortal } from 'preact/compat';
 import { useState } from 'preact/hooks'
 
 import { StatsSettingsModal } from '../modals/stats-settings'
@@ -10,6 +11,7 @@ export const IncomeCard = () => {
   }))
 
   const [showModal, setShowModal] = useState(false)
+  const modalsContainer = document.getElementById('modals');
 
   return (
     <>
@@ -41,8 +43,13 @@ export const IncomeCard = () => {
           </div>
         </div>
       </div>
-
-      <StatsSettingsModal show={showModal} closeModal={() => setShowModal(false)}/>
+      {createPortal(
+        <StatsSettingsModal
+          show={showModal}
+          closeModal={() => setShowModal(false)}
+        />,
+        modalsContainer!
+      )}
     </>
   )
 }

@@ -1,3 +1,4 @@
+import { createPortal } from 'preact/compat';
 import { useState } from 'preact/hooks'
 
 import { Expense } from '../../interfaces/expense'
@@ -45,6 +46,8 @@ export const ExpensesPanel = () => {
     setShowModal(true)
   }
 
+  const modalsContainer = document.getElementById('modals');
+
   return (
     <>
       <table className="table">
@@ -67,11 +70,14 @@ export const ExpensesPanel = () => {
         </button>
       </div>
 
-      <ExpenseModal
-        show={showModal}
-        expenseModalIndex={expenseModalIndex}
-        closeModal={() => toggleModal(false)}
-      />
+      {createPortal(
+        <ExpenseModal
+          show={showModal}
+          expenseModalIndex={expenseModalIndex}
+          closeModal={() => toggleModal(false)}
+        />,
+        modalsContainer!
+      )}
     </>
   )
 }
