@@ -16,13 +16,15 @@ const CategoryRow = ({ name, percentage, amount, isActive }: CategoryRowProps) =
 )
 
 export const CategoriesPanel = () => {
-  const income = useStore(state => state.stats.income)
-  const categories = useStore(state => state.categories)
+  const { income, categories } = useStore(state => ({
+    income: state.stats.income,
+    categories: state.categories,
+  }))
 
   const sum = (a: number, b: number) => a + b
 
-  const totalPercentage = categories.map(c => c.percentage).reduce(sum)
-  const totalAmount = categories.map(c => percentageValue(c.percentage, income)).reduce(sum)
+  const totalPercentage = categories.map(c => c.percentage).reduce(sum, 0)
+  const totalAmount = categories.map(c => percentageValue(c.percentage, income)).reduce(sum, 0)
 
   return (
     <>

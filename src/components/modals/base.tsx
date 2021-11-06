@@ -8,10 +8,10 @@ interface BaseModalProps {
   show: boolean;
   children: ComponentChildren;
   closeModal: () => void;
-  onSubmit?: () => void;
+  formId?: string;
 }
 
-export const BaseModal = ({ title, show, children, closeModal, onSubmit }: BaseModalProps) => (
+export const BaseModal = ({ title, show, children, closeModal, formId }: BaseModalProps) => (
   <div className={`modal modal-lg ${show && 'active'}`}>
     <a className="modal-overlay" aria-label="Close" onClick={() => closeModal()}></a>
     <div className="modal-container container grid-xs">
@@ -30,11 +30,8 @@ export const BaseModal = ({ title, show, children, closeModal, onSubmit }: BaseM
         <button className="btn btn-link" onClick={() => closeModal()}>
           Close
         </button>
-        {onSubmit && (
-          <button
-            className="btn btn-primary"
-            onClick={() => (onSubmit(), closeModal())}
-          >
+        {formId && (
+          <button form={formId} className="btn btn-primary">
             Submit
           </button>
         )}

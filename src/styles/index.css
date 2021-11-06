@@ -1,0 +1,6 @@
+.container.grid-xs { max-width: 496px !important; }
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+}

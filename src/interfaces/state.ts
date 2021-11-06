@@ -7,4 +7,5 @@ export interface State {
   expenses: Array<Expense>;
   categories: Array<Category>;
   updateIncome: (income: number) => void;
+  addExpense: (expense: Expense) => void;
 }

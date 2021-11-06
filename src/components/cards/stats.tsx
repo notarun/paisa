@@ -1,15 +1,15 @@
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
 
 import { StatsSettingsModal } from '../modals/stats-settings'
 import { useStore } from '../../store'
 
 export const StatsCard = () => {
-  const stats = useStore(state => state.stats)
-  const expenses = useStore(state => state.expenses)
+  const { income, totalExpenses } = useStore(state => ({
+    income: state.stats.income,
+    totalExpenses: state.expenses.map(e => e.amount).reduce((a, b) => a + b, 0),
+  }))
 
   const [showModal, setShowModal] = useState(false)
-
-  const totalExpenses = expenses.map(e => e.amount).reduce((a, b) => a + b)
 
   return (
     <>
@@ -23,7 +23,7 @@ export const StatsCard = () => {
             Income
           </div>
           <div className="card-subtitle text-primary">
-            ₹ {stats.income}
+            ₹ {income}
           </div>
 
           <div className="card-title h5 mt-2">
@@ -37,7 +37,7 @@ export const StatsCard = () => {
             Total Remaining
           </div>
           <div className="card-subtitle text-success">
-            ₹ {stats.income - totalExpenses}
+            ₹ {income - totalExpenses}
           </div>
         </div>
       </div>

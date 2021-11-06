@@ -1,19 +1,27 @@
-import create from 'zustand'
+import { persist, StoreApiWithPersist } from 'zustand/middleware'
+import create, { SetState, GetState } from 'zustand'
 
+import { Expense } from '../interfaces/expense'
 import { State } from '../interfaces/state'
 
-export const useStore = create<State>(set => ({
-  stats: {
-    income: 10000,
-  },
-  expenses: [
-    { description: 'Petrol', category: 'Needs', amount: 1000 },
-    { description: 'Apartment Rent', category: 'Needs', amount: 5000 },
-  ],
-  categories: [
-    { name: 'Savings/Investments', percentage: 20 },
-    { name: 'Needs', percentage: 50 },
-    { name: 'Wants', percentage: 30 },
-  ],
-  updateIncome: (income: number) => set({stats: {income}})
-}))
+const initalCategories = [
+  { name: 'Savings/Investments', percentage: 20 },
+  { name: 'Needs', percentage: 50 },
+  { name: 'Wants', percentage: 30 },
+]
+
+export const useStore = create<State>(
+  // @ts-ignore
+  persist(
+    (set, get) => ({
+      stats: { income: 0 },
+      expenses: [],
+      categories: [...initalCategories],
+      updateIncome: (income: number) => set({stats: {income}}),
+      addExpense: (expense: Expense) => set({expenses: [...get().expenses, expense]}),
+    }),
+    {
+      name: 'paisa/storage',
+    }
+  )
+)

@@ -1,0 +1,10 @@
+{
+  "short_name": "paisa",
+  "name": "Paisa",
+  "start_url": "/?source=pwa",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#ffffff",
+  "description": "A personal budgeting application."
+}

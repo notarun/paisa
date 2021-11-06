@@ -1,7 +1,9 @@
-import { useState } from 'preact/hooks'
+import { useReducer, useRef } from 'preact/hooks'
 
-import { BaseModal } from './base'
 import { useStore } from '../../store'
+import { BaseModal } from './base'
+
+const UPDATE_INPUT = (_state: string, e: Event) => (e.target as HTMLInputElement).value;
 
 interface StatsSettingsModalProps {
   show: boolean;
@@ -9,29 +11,40 @@ interface StatsSettingsModalProps {
 }
 
 export const StatsSettingsModal = ({ show, closeModal }: StatsSettingsModalProps) => {
-  const stats = useStore(state => state.stats)
-  const updateIncome = useStore(state => state.updateIncome)
+  const { updateIncome, initialIncome } = useStore(state => ({
+    updateIncome: state.updateIncome,
+    initialIncome: state.stats.income
+  }))
 
-  const [form, setForm] = useState({ income: stats.income })
+  const formId = "form-stats"
+  const [income, setIncome] = useReducer(UPDATE_INPUT, initialIncome.toString())
+
+  const submit = (e: Event) =>
+    (e.preventDefault(), updateIncome(parseFloat(income)), closeModal())
 
   return (
     <BaseModal
       show={show}
       title="Income settings"
+      formId={formId}
       closeModal={closeModal}
-      onSubmit={() => (updateIncome(form.income), closeModal())}
     >
-      <div className="form-group">
+      <form
+        id={formId}
+        className="form-group"
+        onSubmit={(e) => submit(e)}
+      >
         <label className="form-label" for="income">Income</label>
         <input
           id="income"
           type="number"
-          value={form.income}
-          onInput={(e) => setForm({ income: parseFloat((e.target as HTMLInputElement).value) })}
+          value={income}
+          onInput={setIncome}
           placeholder="Income"
           className="form-input"
+          required
         />
-      </div>
+      </form>
     </BaseModal>
   )
 }

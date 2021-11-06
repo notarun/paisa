@@ -5,6 +5,6 @@ import 'spectre.css/dist/spectre-icons.min.css'
 import { render } from 'preact'
 
 import { App } from './components/app'
-import './styles/utils.css'
+import './styles/index.css'
 
 render(<App />, document.getElementById('app')!)
