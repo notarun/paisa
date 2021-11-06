@@ -19,6 +19,11 @@ export const useStore = create<State>(
       categories: [...initalCategories],
       updateIncome: (income: number) => set({stats: {income}}),
       addExpense: (expense: Expense) => set({expenses: [...get().expenses, expense]}),
+      updateExpense: (expense: Expense, index: number) => {
+        const expenses = get().expenses
+        expenses[index] = expense
+        set({expenses: expenses})
+      },
     }),
     {
       name: 'paisa/storage',

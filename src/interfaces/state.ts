@@ -8,4 +8,5 @@ export interface State {
   categories: Array<Category>;
   updateIncome: (income: number) => void;
   addExpense: (expense: Expense) => void;
+  updateExpense: (expense: Expense, index: number) => void;
 }

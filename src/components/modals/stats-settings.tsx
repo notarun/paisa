@@ -1,4 +1,4 @@
-import { useReducer, useRef } from 'preact/hooks'
+import { useReducer } from 'preact/hooks'
 
 import { useStore } from '../../store'
 import { BaseModal } from './base'
