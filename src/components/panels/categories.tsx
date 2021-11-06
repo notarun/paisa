@@ -17,7 +17,7 @@ const CategoryRow = ({ name, percentage, amount, isActive }: CategoryRowProps) =
 
 export const CategoriesPanel = () => {
   const { income, categories } = useStore(state => ({
-    income: state.stats.income,
+    income: state.currentStats().income,
     categories: state.categories,
   }))
 

@@ -5,7 +5,7 @@ import { useStore } from '../../store'
 export const CategoryCard = () => {
   const { categories, income, expenses } = useStore(state => ({
     expenses: state.expenses,
-    income: state.stats.income,
+    income: state.currentStats().income,
     categories: state.categories,
   }))
 

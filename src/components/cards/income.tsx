@@ -4,20 +4,24 @@ import { useState } from 'preact/hooks'
 import { StatsSettingsModal } from '../modals/stats-settings'
 import { useStore } from '../../store'
 
-export const IncomeCard = () => {
+interface IncomeCardProps {
+  showModal: () => void;
+}
+
+export const IncomeCard = ({ showModal }: IncomeCardProps) => {
   const { income, totalExpenses } = useStore(state => ({
-    income: state.stats.income,
+    income: state.currentStats().income,
     totalExpenses: state.expenses.map(e => e.amount).reduce((a, b) => a + b, 0),
   }))
-
-  const [showModal, setShowModal] = useState(false)
-  const modalsContainer = document.getElementById('modals');
 
   return (
     <>
       <div className="card">
         <div className="card-header">
-          <button className="btn btn-link float-right" onClick={() => setShowModal(true)}>
+          <button
+            className="btn btn-link float-right"
+            onClick={() => showModal()}
+          >
             <i className="icon icon-edit"></i>
           </button>
 
@@ -43,13 +47,6 @@ export const IncomeCard = () => {
           </div>
         </div>
       </div>
-      {createPortal(
-        <StatsSettingsModal
-          show={showModal}
-          closeModal={() => setShowModal(false)}
-        />,
-        modalsContainer!
-      )}
     </>
   )
 }

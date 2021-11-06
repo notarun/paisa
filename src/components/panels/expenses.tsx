@@ -1,5 +1,6 @@
-import { createPortal } from 'preact/compat';
+import { createPortal } from 'preact/compat'
 import { useState } from 'preact/hooks'
+import dayjs from 'dayjs'
 
 import { Expense } from '../../interfaces/expense'
 import { ExpenseModal } from '../modals/expense'
@@ -24,7 +25,16 @@ const ExpenseRow = ({ description, category, amount, showModal, expenseIndex }: 
 )
 
 export const ExpensesPanel = () => {
-  const expenses = useStore(state => state.expenses)
+  const { expenses } = useStore(state => ({
+    expenses: state.expenses.filter(
+      e => dayjs(e.date).isBetween(
+        state.currentStats().from,
+        state.currentStats().to,
+        null,
+        '[]'
+      )
+    )
+  }))
 
   const [showModal, setShowModal] = useState(false)
   const [expenseModalIndex, setExpenseModalIndex] = useState<number | null>(null)

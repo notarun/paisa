@@ -14,9 +14,9 @@ interface ExpenseModalProps {
 export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseModalProps) => {
   const today = dayjs().format('YYYY-MM-DD')
 
-  const { expenses, categories, addExpense, updateExpense } = useStore(state => ({
+  const { expenses, categories, createExpense, updateExpense } = useStore(state => ({
     expenses: state.expenses,
-    addExpense: state.addExpense,
+    createExpense: state.createExpense,
     updateExpense: state.updateExpense,
     categories: state.categories.map(c => c.name),
   }))
@@ -37,7 +37,10 @@ export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseMod
   }
 
   useEffect(() => {
-    if (show === false) resetForm()
+    if (!show) {
+      resetForm()
+      return
+    }
 
     if (expenseModalIndex !== null) {
       const expense = expenses[expenseModalIndex]
@@ -51,7 +54,7 @@ export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseMod
     } else {
       setModalTitle('Add expense')
     }
-  }, [show, expenseModalIndex])
+  }, [show])
 
   const submit = (e: Event) => {
     e.preventDefault()
@@ -66,7 +69,7 @@ export const ExpenseModal = ({ show, expenseModalIndex, closeModal }: ExpenseMod
     if (expenseModalIndex !== null) {
       updateExpense(expense, expenseModalIndex)
     } else {
-      addExpense(expense)
+      createExpense(expense)
     }
 
     resetForm()
