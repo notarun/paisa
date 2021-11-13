@@ -28,21 +28,22 @@ export const BaseModal = ({ title, show, children, closeModal, deleteResource, f
       </div>
 
       <div className="modal-footer">
-        <button className="btn btn-link" onClick={() => closeModal()}>
-          Close
-        </button>
-        {deleteResource && (
-          <button
-            className="btn btn-error mr-1"
-            onClick={() => (deleteResource(), closeModal())}
-          >
-            Delete
-          </button>
-        )}
         {formId && (
-          <button form={formId} className="btn btn-primary">
-            Submit
-          </button>
+          <div class="btn-group btn-group-block mb-2">
+            <button form={formId} className="btn btn-primary">
+              Submit
+            </button>
+          </div>
+        )}
+        {deleteResource && (
+          <div class="btn-group btn-group-block mb-2">
+            <button
+              className="btn btn-error"
+              onClick={() => (deleteResource(), closeModal())}
+            >
+              Delete
+            </button>
+          </div>
         )}
       </div>
     </div>

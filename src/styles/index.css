@@ -5,3 +5,27 @@
   position: sticky;
   bottom: 0;
 }
+
+/* BOTTOM SHEET */
+.modal.modal-lg .modal-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal.active, .modal:target {
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.modal.active .modal-container, .modal:target .modal-container {
+  animation: opacity .4s ease 1;
+}
