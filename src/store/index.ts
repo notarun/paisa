@@ -3,6 +3,7 @@ import create, { SetState, GetState } from 'zustand'
 import dayjs from 'dayjs'
 
 import { Statistics } from '../interfaces/statistic'
+import { LOCAL_STORAGE_KEY } from '../constants'
 import { Expense } from '../interfaces/expense'
 import { State } from '../interfaces/state'
 
@@ -55,10 +56,10 @@ export const useStore = create<State>(
         const expenses = get().expenses
         expenses.splice(index, 1)
         set({ expenses })
-      }
+      },
     }),
     {
-      name: 'paisa/storage',
+      name: LOCAL_STORAGE_KEY,
     }
   )
 )
