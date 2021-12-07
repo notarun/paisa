@@ -8,6 +8,8 @@ export interface State {
   expenses: Array<Expense>;
   categories: Array<Category>;
 
+  totalExpensesThisMonth: () => number;
+
   currentStats: () => Statistics;
   updateSelectedStats: (selectedStats: number) => void,
   updateCurrentStats: (stats: Statistics) => void;

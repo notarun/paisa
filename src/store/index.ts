@@ -31,6 +31,16 @@ export const useStore = create<State>(
       expenses: [],
       categories: [...initalCategories],
 
+      /* GETTERS */
+      totalExpensesThisMonth: () => {
+        const { expenses, currentStats } = get()
+
+        return get().expenses
+          .filter(e => dayjs(e.date).isBetween(currentStats().from, currentStats().to))
+          .map(e => e.amount)
+          .reduce((a, b) => a + b, 0)
+      },
+
       /* ACTIONS */
       currentStats: () => get().stats[get().selectedStats],
       updateSelectedStats: (selectedStats: number) => set({ selectedStats }),

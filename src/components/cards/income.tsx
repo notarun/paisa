@@ -8,7 +8,7 @@ interface IncomeCardProps {
 export const IncomeCard = ({ showModal }: IncomeCardProps) => {
   const { currentStats, totalExpenses } = useStore(state => ({
     currentStats: state.currentStats,
-    totalExpenses: state.expenses.map(e => e.amount).reduce((a, b) => a + b, 0),
+    totalExpenses: state.totalExpensesThisMonth(),
   }))
 
   return (
